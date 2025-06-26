@@ -1,0 +1,16 @@
+services:
+  frontend_apache:
+    build: docker/apache
+    networks:
+      - api-oauth_intranet
+      - api-tareas
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 7000:80
+
+networks:
+  api-tareas:
+    driver: bridge
+  api-oauth_intranet:
+    external: true
