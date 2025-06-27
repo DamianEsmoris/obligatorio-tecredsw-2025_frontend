@@ -9,6 +9,17 @@ export function userSessionActive() {
     return 'token' in localStorage;
 }
 
+export async function passwordRecovery(passwordRecoveryData) {
+    const registerResponse = await fetch(OAUTH_API_URL + '/api/user/password-recovery', {
+        method: "POST",
+        headers: FETCH_DEFUALT_HEADERS,
+        body: JSON.stringify(passwordRecoveryData)
+    })
+    if (!registerResponse.ok)
+        throw new Error('Couldn\'t recover the password');
+    document.location = '/login.html';
+}
+
 export async function register(registerData) {
     const registerResponse = await fetch(OAUTH_API_URL + '/api/user', {
         method: "POST",
