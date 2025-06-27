@@ -56,6 +56,7 @@ export class CommentsElement extends HTMLElement {
 
             const commentSubmit = document.createElement('input');
             commentSubmit.type = 'submit';
+            commentSubmit.value = 'Comentar';
 
             commentForm.appendChild(commentBody);
             commentForm.appendChild(commentSubmit);
