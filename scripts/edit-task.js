@@ -72,6 +72,7 @@ async function replaceCategoriesWithIds(categories) {
     HTML_ELEMENTS.TASK_EDIT_FORM['title'].value = task.title;
     HTML_ELEMENTS.TASK_EDIT_FORM['description'].value = task.description;
     console.log(task.participants.map(({user_id}) => user_id));
+    HTML_ELEMENTS.TASK_EDIT_FORM['completeness'].value = task.completeness;
     HTML_ELEMENTS.TASK_EDIT_FORM['participants'].value = task.participants.map(({user_id}) => USER_ID_MAPPING[user_id].email).join(",");
     HTML_ELEMENTS.TASK_EDIT_FORM['start_date'].value = task.start_date;
     HTML_ELEMENTS.TASK_EDIT_FORM['due_date'].value = task.due_date;
