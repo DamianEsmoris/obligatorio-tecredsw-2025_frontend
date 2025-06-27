@@ -19,8 +19,9 @@ class NavBar extends HTMLElement {
         indexLink.textContent = 'Inicio';
         leftItems.appendChild(wrapInLi(indexLink));
         if (userSessionActive()) {
-            const usernameText = document.createElement('span');
-            usernameText.textContent = userData()['email'];
+            const usernameLink = document.createElement('a');
+            usernameLink.href = "/user.html";
+            usernameLink.textContent = userData()['email'];
 
             const createTaskLink = document.createElement('a');
             createTaskLink.href = '/create-task.html';
@@ -30,7 +31,7 @@ class NavBar extends HTMLElement {
             logoutBttn.textContent = 'Cerrrar sesión';
             logoutBttn.onclick = logout;
 
-            middleItems.appendChild(wrapInLi(usernameText));
+            middleItems.appendChild(wrapInLi(usernameLink));
             rightItems.appendChild(wrapInLi(createTaskLink));
             rightItems.appendChild(wrapInLi(logoutBttn));
         } else {
