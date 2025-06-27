@@ -27,9 +27,16 @@ export class TaskElement extends HTMLElement {
             +  ' - '
             + this.task.dueDate.toLocaleString();
 
+        const completenessBar = document.createElement('progress');
+        console.log(this.task.completeness);
+        completenessBar.value = this.task.completeness;
+        completenessBar.min = 0;
+        completenessBar.max = 100;
+
         header.appendChild(title);
         header.appendChild(categoriesCont);
         header.appendChild(dateText);
+        header.appendChild(completenessBar);
 
         const description = document.createElement('p');
         description.textContent = this.task.description;
