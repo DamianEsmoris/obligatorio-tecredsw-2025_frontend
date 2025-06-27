@@ -26,15 +26,20 @@ class TaskTable extends HTMLElement {
         'Acciones'
     ];
 
-    JSON_KEYS = {
-        'id': (id) => `<a href='/task.html#${id}'>${id}</a>`,
-        'title': (title) => title,
-        'description': (description) => description,
-        'start_date': (date) => new Date(date).toLocaleString(),
-        'due_date': (date) => new Date(date).toLocaleString(),
-        'categories': (categories) => categories.map(({name}) => `<span>${name.length > 12 ? name.slice(0,12) + '...' : name}</span>`),
-        '...': () => {},
-    };
+    JSON_KEYS = [
+        ({id}) => `<a href='/task.html#${id}'>${id}</a>`,
+        ({title}) => title,
+        ({description}) => description,
+        ({start_date : date}) => new Date(date).toLocaleString(),
+        ({start_date : date}) => new Date(date).toLocaleString(),
+        ({categories}) => categories.map(({name}) => `<span>${name.length > 12 ? name.slice(0,12) + '...' : name}</span>`),
+        (task) => {
+            return `
+                <a href='/edit-task.html#${task.id}'>EDIT</a>
+                <a href='/delete-task.html#${task.id}'>DELETE</a>
+            `;
+        }
+    ]
 
 
     connectedCallback() {
@@ -65,9 +70,10 @@ class TaskTable extends HTMLElement {
 
     loadTasks(task) {
         const tr = document.createElement('tr');
-        for (const [key, callback] of Object.entries(this.JSON_KEYS)) {
+        const values = Object.values(this.JSON_KEYS);
+        for (const callback of values) {
             const td = document.createElement('td');
-            td.innerHTML = callback(task[key]);
+            td.innerHTML = callback(task);
             tr.appendChild(td);
         }
         this.tbody.appendChild(tr);
