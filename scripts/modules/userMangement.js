@@ -48,3 +48,12 @@ export function userToken() {
 export function userData() {
     return JSON.parse(localStorage.getItem('userData'));
 }
+
+export async function getUsers() {
+    const response = await fetch(OAUTH_API_URL + '/api/user', {
+            headers: FETCH_DEFUALT_HEADERS,
+    })
+    if (!response.ok)
+        throw new Error('Couldn\'t get the users data');
+    return await response.json();
+}
