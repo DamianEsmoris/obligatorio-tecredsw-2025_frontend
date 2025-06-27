@@ -9,6 +9,35 @@ export function userSessionActive() {
     return 'token' in localStorage;
 }
 
+export async function register(registerData) {
+    const registerResponse = await fetch(OAUTH_API_URL + '/api/user', {
+        method: "POST",
+        headers: FETCH_DEFUALT_HEADERS,
+        body: JSON.stringify(registerData)
+    })
+    if (!registerResponse.ok)
+        throw new Error('Couldn\'t validate the access_token');
+    const loginData = {
+        'grant_type':  "password",
+        'client_id': OAUTH_API_CLIENT_ID,
+        'client_secret': OAUTH_API_CLIENT_SECRET,
+        'username': registerData.email,
+        'password': registerData.password
+    }
+    const tokenResponse = await fetch(OAUTH_API_URL + '/oauth/token', {
+        method: "POST",
+        headers: FETCH_DEFUALT_HEADERS,
+        body: JSON.stringify(loginData)
+    })
+    if (!tokenResponse.ok)
+        throw new Error('Couldn\'t get the access_token');
+    const token = await tokenResponse.json();
+    const userData = await registerResponse.json();
+    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('userData', JSON.stringify(userData))
+    document.location = '/';
+}
+
 export async function login(loginData) {
     loginData['grant_type'] =  "password";
     loginData['client_id'] = OAUTH_API_CLIENT_ID;
