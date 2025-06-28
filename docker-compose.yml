@@ -1,6 +1,6 @@
 services:
   frontend_apache:
-    build: docker/apache
+    build: docker/dev/apache
     networks:
       - api-oauth_intranet
       - api-tareas
