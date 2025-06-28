@@ -1,7 +1,7 @@
 import { userToken } from "./userMangement.js";
 
-export const TASK_API_URL = 'http://localhost:8000/api';
-export const OAUTH_API_URL = 'http://localhost:8001';
+export const TASK_API_URL = 'apache.api-tareas-obligatorio-tecredsw.svc.cluster.local';
+export const OAUTH_API_URL = 'apache.api-oauth-obligatorio-tecredsw.svc.cluster.local';
 
 export const OAUTH_API_CLIENT_ID = 1;
 export const OAUTH_API_CLIENT_SECRET = "D1yhS8szbFYcyCQnxGDQZ0TXQpBXrqnK2oNkt7AJ";
