@@ -1,4 +1,4 @@
-import { ENVIRONMENT, FETCH_DEFUALT_HEADERS } from "./constants.js";
+import { ENVIRONMENT, FETCH_DEFUALT_HEADERS, FETCH_HEADER_WITH_AUTH } from "./constants.js";
 
 export function checkIfUnauthorized() {
     if (!userSessionActive())
