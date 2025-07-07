@@ -1,4 +1,4 @@
-import { ENVIRONMENT } from "./constants.js";
+import { ENVIRONMENT, FETCH_DEFUALT_HEADERS } from "./constants.js";
 
 
 export function checkIfUnauthorized() {
