@@ -1,5 +1,5 @@
 import './components/nav-bar.js';
-import { FETCH_HEADER_WITH_AUTH } from './modules/constants.js';
+import { ENVIRONMENT, FETCH_HEADER_WITH_AUTH } from './modules/constants.js';
 import { checkIfUnauthorized } from './modules/userMangement.js';
 
 checkIfUnauthorized();

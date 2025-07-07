@@ -1,5 +1,5 @@
 import './components/nav-bar.js';
-import { FETCH_HEADER_WITH_AUTH, FETCH_DEFUALT_HEADERS  } from "./modules/constants.js";
+import { FETCH_HEADER_WITH_AUTH, FETCH_DEFUALT_HEADERS, ENVIRONMENT  } from "./modules/constants.js";
 import { checkIfUnauthorized, getUsers } from "./modules/userMangement.js";
 import { formatDateTime, parseCSVline } from './modules/utils.js';
 checkIfUnauthorized();
