@@ -1,6 +1,5 @@
 import './components/nav-bar.js';
-import { FETCH_HEADER_WITH_AUTH, TASK_API_URL } from './modules/constants.js';
-import { login } from './modules/userMangement.js';
+import { ENVIRONMENT, FETCH_HEADER_WITH_AUTH } from './modules/constants.js';
 
 const HTML_ELEMENTS = Object.freeze({
     COMMENT_FORM: document.getElementById('editCommentForm')
@@ -13,7 +12,8 @@ const comment = JSON.parse(localStorage.getItem('comment'));
 
 HTML_ELEMENTS.COMMENT_FORM['body'].value = comment.body;
 
-HTML_ELEMENTS.COMMENT_FORM.onsubmit = (e) => {
+HTML_ELEMENTS.COMMENT_FORM.onsubmit = async (e) => {
+    const { TASK_API_URL } = ENVIRONMENT;
     e.preventDefault();
     let data = Object.fromEntries(
         new FormData(HTML_ELEMENTS.COMMENT_FORM)

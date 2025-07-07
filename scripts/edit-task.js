@@ -1,8 +1,9 @@
 import './components/nav-bar.js';
-import { TASK_API_URL, FETCH_HEADER_WITH_AUTH, FETCH_DEFUALT_HEADERS  } from "./modules/constants.js";
-import { checkIfUnauthorized, getUsers, userData } from "./modules/userMangement.js";
+import { FETCH_HEADER_WITH_AUTH, FETCH_DEFUALT_HEADERS  } from "./modules/constants.js";
+import { checkIfUnauthorized, getUsers } from "./modules/userMangement.js";
 import { formatDateTime, parseCSVline } from './modules/utils.js';
 checkIfUnauthorized();
+let TASK_API_URL;
 
 const HTML_ELEMENTS = Object.freeze({
     TASK_EDIT_FORM: document.getElementById('taskEditForm')
@@ -15,21 +16,23 @@ const TASK_ID = URL_HASH.substring(1);
 if (!TASK_ID || isNaN(TASK_ID))
     document.location = '/';
 
-
 const CATEGORIES_ID_MAPPING = new Map();
-fetch(TASK_API_URL + '/category', {
-    headers: FETCH_DEFUALT_HEADERS,
-})
+const USER_EMAIL_MAPPING = new Map();
+
+ENVIRONMENT.then(environment => {
+    TASK_API_URL = environment.TASK_API_URL;
+
+    fetch(TASK_API_URL + '/category', { headers: FETCH_DEFUALT_HEADERS })
     .then(response => response.ok ? response.json() : Promise.reject())
     .then(categories => categories.forEach(({id, name}) => CATEGORIES_ID_MAPPING.set(name, id)))
     .catch(error => alert(error));
 
-const USER_EMAIL_MAPPING = new Map();
-getUsers().then(users =>
-    users.forEach(user => USER_EMAIL_MAPPING.set(user.email, user))
-)
+    getUsers().then(users =>
+        users.forEach(user => USER_EMAIL_MAPPING.set(user.email, user))
+    )
     .catch(error => alert(error));
 
+})
 
 async function createCategory(name) {
     const response = await fetch(TASK_API_URL + '/category', {

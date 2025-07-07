@@ -1,8 +1,9 @@
-import { FETCH_HEADER_WITH_AUTH, TASK_API_URL } from "../modules/constants.js";
+import { ENVIRONMENT, FETCH_HEADER_WITH_AUTH } from "../modules/constants.js";
 import { getUsers, userData, userSessionActive } from "../modules/userMangement.js";
 
 const USER_ID_MAPPING = {};
 let commentContainer;
+ENVIRONMENT
 
 
 function createOwnComment(comment) {
@@ -71,28 +72,29 @@ export class CommentsElement extends HTMLElement {
 }
 
 
-function postComment(event, taskId) {
+async function postComment(event, taskId) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
     data.task_id = taskId;
     data.author_id = userData()['id'];
-    fetch(TASK_API_URL + '/comment', {
+
+    const { TASK_API_URL } = await ENVIRONMENT;
+    const response = await fetch(TASK_API_URL + '/comment', {
         method: "POST",
         headers: FETCH_HEADER_WITH_AUTH(),
         body: JSON.stringify(data)
     })
-    .then(response => response.ok ? response.json() : Promise.reject())
-    .then((comment) => {
-        const commentElement =  createOwnComment(comment);
-        commentElement.textContent = userData()['name'] + ": " + data.body;
-        commentContainer.appendChild(commentElement);
-        event.target.reset();
-    })
-    .catch(error => {
+    if (!response.ok) {
         console.error(error);
         commentContainer.lastChild.remove();
         event.target.reset();
-    });
+        throw new Error();
+    }
+    const comment = await response.json();
+    const commentElement =  createOwnComment(comment);
+    commentElement.textContent = userData()['name'] + ": " + data.body;
+    commentContainer.appendChild(commentElement);
+    event.target.reset();
 }
 
 customElements.define('task-comments', CommentsElement) 

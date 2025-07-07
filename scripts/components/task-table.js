@@ -1,7 +1,8 @@
-import { FETCH_DEFUALT_HEADERS, TASK_API_URL } from "../modules/constants.js";
-import { userData, userSessionActive } from "../modules/userMangement.js";
+import { ENVIRONMENT, FETCH_DEFUALT_HEADERS } from "../modules/constants.js";
+import { userData } from "../modules/userMangement.js";
 
 async function getTasks(id) {
+    const { TASK_API_URL } = await ENVIRONMENT;
     id = id == null ? '' : '?participant_id=' + id;
     const response = await fetch(TASK_API_URL + '/task' + id, {
         headers: FETCH_DEFUALT_HEADERS,
