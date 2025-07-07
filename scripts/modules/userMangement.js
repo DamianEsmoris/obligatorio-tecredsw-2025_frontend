@@ -1,6 +1,5 @@
 import { ENVIRONMENT, FETCH_DEFUALT_HEADERS } from "./constants.js";
 
-
 export function checkIfUnauthorized() {
     if (!userSessionActive())
         document.location = '/';
@@ -11,7 +10,7 @@ export function userSessionActive() {
 }
 
 export async function passwordRecovery(passwordRecoveryData) {
-    const { OAUTH_API_URL } = ENVIRONMENT;
+    const { OAUTH_API_URL } = await ENVIRONMENT;
     const registerResponse = await fetch(OAUTH_API_URL + '/api/user/password-recovery', {
         method: "POST",
         headers: FETCH_DEFUALT_HEADERS,
@@ -23,7 +22,7 @@ export async function passwordRecovery(passwordRecoveryData) {
 }
 
 export async function register(registerData) {
-    const { OAUTH_API_URL, OAUTH_API_CLIENT_ID, OAUTH_API_CLIENT_SECRET } = ENVIRONMENT;
+    const { OAUTH_API_URL, OAUTH_API_CLIENT_ID, OAUTH_API_CLIENT_SECRET } = await ENVIRONMENT;
     const registerResponse = await fetch(OAUTH_API_URL + '/api/user', {
         method: "POST",
         headers: FETCH_DEFUALT_HEADERS,
@@ -53,7 +52,7 @@ export async function register(registerData) {
 }
 
 export async function login(loginData) {
-    const { OAUTH_API_URL, OAUTH_API_CLIENT_ID, OAUTH_API_CLIENT_SECRET } = ENVIRONMENT;
+    const { OAUTH_API_URL, OAUTH_API_CLIENT_ID, OAUTH_API_CLIENT_SECRET } = await ENVIRONMENT;
     loginData['grant_type'] =  "password";
     loginData['client_id'] = OAUTH_API_CLIENT_ID;
     loginData['client_secret'] = OAUTH_API_CLIENT_SECRET;
@@ -76,8 +75,8 @@ export async function login(loginData) {
     document.location = '/';
 }
 
-export function logout() {
-    const { OAUTH_API_URL } = ENVIRONMENT;
+export async function logout() {
+    const { OAUTH_API_URL } = await ENVIRONMENT;
     fetch(OAUTH_API_URL + '/api/logout', {
         headers: FETCH_HEADER_WITH_AUTH(),
     })
@@ -95,7 +94,7 @@ export function userData() {
 }
 
 export async function getUsers() {
-    const { OAUTH_API_URL } = ENVIRONMENT;
+    const { OAUTH_API_URL } = await ENVIRONMENT;
     const response = await fetch(OAUTH_API_URL + '/api/user', {
             headers: FETCH_DEFUALT_HEADERS,
     })
