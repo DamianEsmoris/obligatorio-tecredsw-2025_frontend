@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apache-ingress
+  namespace: front-obligatorio-tecredsw
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+    - http:  # Remove host field
+        paths:
+          - path: /
+            backend:
+              service:
+                name: apache
+                port: 
+                  number: 80

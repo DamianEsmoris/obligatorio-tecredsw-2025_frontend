@@ -1,3 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: front-obligatorio-tecredsw
+data:
+  constants.json: |
+    {
+      "TASK_API_URL": "apache.api-tareas-obligatorio-tecredsw.svc.cluster.local/api",
+      "OAUTH_API_URL": "apache.api-oauth-obligatorio-tecredsw.svc.cluster.local",
+      "OAUTH_API_CLIENT_ID": "",
+      "OAUTH_API_CLIENT_SECRET": ""
+    }
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,3 +35,11 @@ spec:
           env:
             - name: REPO_URL
               value: "https://github.com/DamianEsmoris/obligatorio-tecredsw-2025_frontend"
+          volumeMounts:
+            - name: frontend-config
+              mountPath: /var/www/html/config/constants.json
+              subPath: variables.json
+      volumes:
+      - name: frontend-config
+        configMap:
+          name: frontend-config
