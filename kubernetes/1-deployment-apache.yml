@@ -38,7 +38,7 @@ spec:
           volumeMounts:
             - name: frontend-config
               mountPath: /var/www/html/config/constants.json
-              subPath: variables.json
+              subPath: constants.json
       volumes:
       - name: frontend-config
         configMap:
