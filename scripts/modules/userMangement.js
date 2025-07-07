@@ -1,4 +1,4 @@
-import { ENVIRONMENT } from "./constants";
+import { ENVIRONMENT } from "./constants.js";
 
 
 export function checkIfUnauthorized() {
