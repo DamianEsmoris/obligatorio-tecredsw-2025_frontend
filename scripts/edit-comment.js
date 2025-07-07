@@ -13,7 +13,7 @@ const comment = JSON.parse(localStorage.getItem('comment'));
 HTML_ELEMENTS.COMMENT_FORM['body'].value = comment.body;
 
 HTML_ELEMENTS.COMMENT_FORM.onsubmit = async (e) => {
-    const { TASK_API_URL } = ENVIRONMENT;
+    const { TASK_API_URL } = await ENVIRONMENT;
     e.preventDefault();
     let data = Object.fromEntries(
         new FormData(HTML_ELEMENTS.COMMENT_FORM)
